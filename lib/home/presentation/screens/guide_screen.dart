@@ -55,7 +55,7 @@ class _GuideScreenState extends State<GuideScreen> {
               child: Container(
                 width: 180,
                 height: 180,
-                child: SvgPicture.asset(PSVG.domePassword),
+                child: SvgPicture.asset(PSVG.northguard),
               ),
             ),
             Expanded(

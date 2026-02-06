@@ -22,7 +22,7 @@ class SplashScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: const DecorationImage(
-                      image: AssetImage('assets/logo.png'),
+                      image: AssetImage(NImage.logo),
                     ),
                   ),
                 ),
