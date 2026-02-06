@@ -8,5 +8,5 @@ class PSVG {
 class NImage {
   static const _path = 'assets';
 
-  static const logo = '$_path/logo.jpg';
+  static const logo = '$_path/logo.png';
 }
