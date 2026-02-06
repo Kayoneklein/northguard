@@ -1,0 +1,22 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:northguard/authentication/bloc/authentication_bloc.dart';
+import 'package:northguard/authentication/bloc/authentication_event.dart';
+import 'package:northguard/messages/bloc/message_edit_bloc.dart';
+import 'package:northguard/messages/bloc/message_edit_event.dart';
+import 'package:northguard/messages/bloc/message_edit_state.dart';
+import 'package:northguard/messages/bloc/messages_bloc.dart';
+import 'package:northguard/messages/bloc/messages_event.dart';
+import 'package:northguard/messages/bloc/messages_state.dart';
+import 'package:northguard/messages/presentation/widgets/message_member.dart';
+import 'package:northguard/messages/presentation/widgets/messages_list.dart';
+import 'package:northguard/model/message.dart';
+import 'package:northguard/model/team.dart';
+import 'package:northguard/sharing/index.dart';
+import 'package:northguard/util/formatters.dart';
+import 'package:northguard/util/strings.dart';
+import 'package:northguard/widget/custom_widgets.dart';
+
+part 'presentation/screens/message_details_screen.dart';
+part 'presentation/screens/message_edit_screen.dart';
+part 'presentation/screens/messages_screen.dart';

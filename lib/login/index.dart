@@ -1,0 +1,38 @@
+// import 'package:biometric_signature/android_config.dart';
+import 'package:biometric_signature/biometric_signature.dart';
+// import 'package:biometric_signature/signature_options.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:local_auth_android/local_auth_android.dart';
+import 'package:local_auth_darwin/local_auth_darwin.dart';
+import 'package:northguard/authentication/bloc/authentication_bloc.dart';
+import 'package:northguard/authentication/bloc/authentication_event.dart';
+import 'package:northguard/config/configuration_bloc.dart';
+import 'package:northguard/config/configuration_event.dart';
+import 'package:northguard/constants/assets.dart';
+import 'package:northguard/constants/preferences.dart';
+import 'package:northguard/login/bloc/login_bloc.dart';
+import 'package:northguard/login/bloc/login_event.dart';
+import 'package:northguard/login/bloc/login_settings_bloc.dart';
+import 'package:northguard/login/bloc/login_settings_event.dart';
+import 'package:northguard/login/bloc/login_settings_state.dart';
+import 'package:northguard/login/bloc/login_state.dart';
+import 'package:northguard/login/bloc/signup.dart' as signup;
+import 'package:northguard/model/configuration.dart';
+import 'package:northguard/util/biometrics.dart';
+import 'package:northguard/util/extensions.dart';
+import 'package:northguard/util/settings.dart';
+import 'package:northguard/util/strings.dart';
+import 'package:northguard/web/web.dart';
+import 'package:northguard/widget/custom_widgets.dart';
+
+part 'presentation/login_screen.dart';
+part 'presentation/forgot_password_screen.dart';
+part 'presentation/login_settings_screen.dart';
+part 'presentation/signup_screen.dart';
+
+part 'widgets/login_form.dart';
