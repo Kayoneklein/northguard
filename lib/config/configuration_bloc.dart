@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:northguard/web/server_adapter.dart';
 
@@ -34,30 +32,6 @@ class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
   }
 
   final ServerAdapter _server = ServerAdapter.get;
-
-  /*@override
-  Stream<ConfigurationState> mapEventToState(ConfigurationEvent event) async* {
-    if (event is ReloadRequested) {
-      yield state.copyWith(
-        isLoading: true,
-      );
-      await _server.cleanRemoteConfig();
-      _loadConfigData();
-    }
-    if (event is ConfigurationLoadFinished) {
-      if (event.isSuccess) {
-        yield state.copyWith(
-          isLoading: false,
-          configuration: event.configuration,
-        );
-      } else {
-        yield state.copyWith(
-          isLoading: false,
-        );
-        //TODO maybe inform user somehow
-      }
-    }
-  }*/
 
   // //
   /// Loads configs from the server

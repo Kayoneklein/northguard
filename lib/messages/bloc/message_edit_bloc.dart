@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:collection/collection.dart';
 import 'package:bloc/bloc.dart';
 import 'package:northguard/model/message.dart';
 import 'package:northguard/model/team.dart';

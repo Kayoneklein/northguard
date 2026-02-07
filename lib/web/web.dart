@@ -33,12 +33,9 @@ class WebProvider {
 
   //--------------------------------------------------------------------------------------------------------------------
 
-  //static const DEFAULT_SERVER = 'https://';
   // static const DEFAULT_SERVER = 'https://pcrypt.org';
 
-  static const DEFAULT_SERVER = 'https://passwordmanager.pandasecurity.com';
-
-  // static const DEFAULT_SERVER = 'https://beast.dk/passdev_ibay';
+  static const DEFAULT_SERVER = 'https://northguard.pwmanager.dk';
 
   String _currentServer = '';
 

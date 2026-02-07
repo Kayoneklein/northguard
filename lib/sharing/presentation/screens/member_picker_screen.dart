@@ -285,8 +285,6 @@ class _MemberPickerContentState extends State<_MemberPickerContent> {
         return _buildMembersPage(context, state);
       case MemberPickerTab.email:
         return _buildEmailPage(context, state);
-      default:
-        return const SizedBox();
     }
   }
 

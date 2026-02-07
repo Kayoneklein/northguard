@@ -69,62 +69,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   SettingsState? _initialState;
   bool isLanguageChanged = false;
 
-  /*  @override
-  Stream<SettingsState> mapEventToState(
-    SettingsEvent event,
-  ) async* {
-    if (event is SettingsInitialized) {
-      _initialState = SettingsState(
-        isInitialized: true,
-        currentLanguage: event.currentLanguage,
-        allLanguages: BuiltList.from(event.allLanguages),
-        isChangingLanguage: false,
-      );
-      yield _initialState!;
-    }
-    //Change current language
-    if (event is LanguageSelectionChanged) {
-      if (event.position > -1 &&
-          event.position < state.allLanguages.length &&
-          state.currentLanguage != state.allLanguages[event.position]) {
-        yield state.copyWith(
-          isChangingLanguage: true,
-        );
-        final result = await Localization.get.changeLanguage(state.allLanguages[event.position]);
-        if (result) {
-          isLanguageChanged= true;
-          yield state.copyWith(
-            isChangingLanguage: false,
-            currentLanguage: Localization.get.currentLanguage,
-          );
-        } else {
-          yield LanguageChangingErrorState(state);
-        }
-      }
-    }
-    //Apply changes
-    if (event is ChangesConfirmed) {
-      //TODO apply changes
-      yield NavigateBackState(state);
-    }
-    //Discard changes
-    if (event is BackButtonPressed) {
-      if (needToShowConfirmationDialog()) {
-        yield ShowDiscardDialogState(state);
-      } else {
-        yield NavigateBackState(state);
-      }
-    }
-    //Answer dialog question
-    if (event is DialogConfirmationReceived) {
-      if (event.isYes) {
-        yield NavigateBackState(state);
-      } else {
-        yield state.copyWith();
-      }
-    }
-  }*/
-
   ///Load data for initial state
   Future<void> loadInitialState() async {
     add(

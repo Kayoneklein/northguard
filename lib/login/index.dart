@@ -14,6 +14,7 @@ import 'package:northguard/authentication/bloc/authentication_event.dart';
 import 'package:northguard/config/configuration_bloc.dart';
 import 'package:northguard/config/configuration_event.dart';
 import 'package:northguard/constants/assets.dart';
+import 'package:northguard/constants/colors.dart';
 import 'package:northguard/constants/preferences.dart';
 import 'package:northguard/login/bloc/login_bloc.dart';
 import 'package:northguard/login/bloc/login_event.dart';

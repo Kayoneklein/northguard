@@ -8,7 +8,8 @@ class SplashScreen extends StatelessWidget {
       context,
     ).state.configuration;
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: PColors.deepBlue,
+      // backgroundColor: Theme.of(context).primaryColor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(

@@ -25,10 +25,12 @@ class _LoginFormState extends State<LoginForm> {
     _initBiometric();
 
     BiometricsService.get.checkDeviceSupported().then((deviceSupported) {
-      _loginFormBloc.add(BiometricsAvailableChanged(
-        isDeviceSupported: deviceSupported,
-        enabled: BiometricsService.get.canCheckBiometrics,
-      ));
+      _loginFormBloc.add(
+        BiometricsAvailableChanged(
+          isDeviceSupported: deviceSupported,
+          enabled: BiometricsService.get.canCheckBiometrics,
+        ),
+      );
     });
   }
 
@@ -46,11 +48,7 @@ class _LoginFormState extends State<LoginForm> {
     if (currentServer != WebProvider.DEFAULT_SERVER) {
       _loginFormBloc.add(const AutomaticallyChangeCustomUrl(true));
     }
-    _loginFormBloc.add(
-      BiometricsCheckedChanged(
-        checked: biometrics ?? true,
-      ),
-    );
+    _loginFormBloc.add(BiometricsCheckedChanged(checked: biometrics ?? true));
   }
 
   @override
@@ -61,11 +59,13 @@ class _LoginFormState extends State<LoginForm> {
         // Success
         if (state.loginStatus == LoginStatus.success) {
           await _settings.delete(Settings.LOGOUT_DUE_TO_BIO_AUTH);
-          BlocProvider.of<AuthenticationBloc>(context).add(SignedInEvent(
-            minutesTillAutoLogout: autoLogoutTimerToMinutes(state.autoLogout),
-            biometricsEnabled:
-                state.biometricsAvailable && state.biometricsChecked,
-          ));
+          BlocProvider.of<AuthenticationBloc>(context).add(
+            SignedInEvent(
+              minutesTillAutoLogout: autoLogoutTimerToMinutes(state.autoLogout),
+              biometricsEnabled:
+                  state.biometricsAvailable && state.biometricsChecked,
+            ),
+          );
         }
         // Pin code required
         if (state.loginStatus == LoginStatus.pinCodeRequired) {
@@ -86,12 +86,14 @@ class _LoginFormState extends State<LoginForm> {
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
           if (_usernameController.text != state.email) {
-            _usernameController.value =
-                _usernameController.value.copyWith(text: state.email);
+            _usernameController.value = _usernameController.value.copyWith(
+              text: state.email,
+            );
           }
 
-          final remoteConfig =
-              BlocProvider.of<ConfigurationBloc>(context).state.configuration;
+          final remoteConfig = BlocProvider.of<ConfigurationBloc>(
+            context,
+          ).state.configuration;
           return Stack(
             children: [
               Form(
@@ -100,8 +102,9 @@ class _LoginFormState extends State<LoginForm> {
                   builder: (context, constraints) {
                     return SingleChildScrollView(
                       child: ConstrainedBox(
-                        constraints:
-                            BoxConstraints(minHeight: constraints.maxHeight),
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
+                        ),
                         child: IntrinsicHeight(
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -160,21 +163,22 @@ class _LoginFormState extends State<LoginForm> {
   ///Helper method for showing error dialogs
   Future<void> _showErrorDialog(String message) async {
     await showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(Strings.loginError),
-            content: Text(message),
-            actions: <Widget>[
-              TextButton(
-                child: Text(Strings.actionOk),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(Strings.loginError),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text(Strings.actionOk),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
     _loginFormBloc.add(ErrorMessageViewed());
   }
 
@@ -184,8 +188,10 @@ class _LoginFormState extends State<LoginForm> {
       title: Strings.loginPinRequiredTitle,
       hint: Strings.loginPinRequiredHint,
       emptyMessage: Strings.loginPinRequiredEmpty,
-      keyboardType:
-          const TextInputType.numberWithOptions(signed: false, decimal: false),
+      keyboardType: const TextInputType.numberWithOptions(
+        signed: false,
+        decimal: false,
+      ),
       positiveTitle: Strings.actionOk,
       cancelTitle: Strings.actionCancel,
     );
@@ -208,14 +214,13 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _onAutoLogoutValueChanged(AutoLogoutTimer? newValue) {
-    _loginFormBloc
-        .add(AutoLogoutValueChanged(value: newValue ?? AutoLogoutTimer.never));
+    _loginFormBloc.add(
+      AutoLogoutValueChanged(value: newValue ?? AutoLogoutTimer.never),
+    );
   }
 
   void _onBiometricsCheckedChanged(bool? checked) {
-    _loginFormBloc.add(BiometricsCheckedChanged(
-      checked: checked ?? false,
-    ));
+    _loginFormBloc.add(BiometricsCheckedChanged(checked: checked ?? false));
   }
 
   void _onSubmitPressed() {
@@ -240,8 +245,6 @@ class _LoginFormState extends State<LoginForm> {
         return Strings.loginAutoLogoutHour1;
       case AutoLogoutTimer.hour4:
         return Strings.loginAutoLogoutHour4;
-      default:
-        return '';
     }
   }
 }
@@ -346,9 +349,11 @@ class _PasswordColumn extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: IconButton(
-                icon: Icon(state.isPasswordVisible
-                    ? Icons.visibility_off
-                    : Icons.visibility),
+                icon: Icon(
+                  state.isPasswordVisible
+                      ? Icons.visibility_off
+                      : Icons.visibility,
+                ),
                 tooltip: state.isPasswordVisible
                     ? Strings.actionHidePassword
                     : Strings.actionViewPassword,
@@ -490,8 +495,9 @@ class _AuthButtons extends StatelessWidget {
                     context,
                     title: Strings.actionSignUp.toUpperCase(),
                     onPressed: () {
-                      BlocProvider.of<AuthenticationBloc>(context)
-                          .add(SignUpRequestedEvent());
+                      BlocProvider.of<AuthenticationBloc>(
+                        context,
+                      ).add(SignUpRequestedEvent());
                     },
                   ),
                 ),
@@ -524,15 +530,13 @@ class _LoadingWidget extends StatelessWidget {
                   Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8.0),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
                     ),
                     child: Column(
                       children: [
                         Container(
                           decoration: const BoxDecoration(
-                            color: Colors.blue,
+                            color: PColors.blue,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(8.0),
                               topRight: Radius.circular(8.0),
@@ -545,7 +549,9 @@ class _LoadingWidget extends StatelessWidget {
                               '2FA for secure logon',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Colors.white, fontSize: 24.0),
+                                color: Colors.white,
+                                fontSize: 24.0,
+                              ),
                             ),
                           ),
                         ),
@@ -560,9 +566,7 @@ class _LoadingWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                const SizedBox(
-                  height: 16.0,
-                ),
+                const SizedBox(height: 16.0),
                 const Center(
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation(Colors.white),

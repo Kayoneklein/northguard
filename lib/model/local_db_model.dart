@@ -1,4 +1,3 @@
-import 'package:northguard/model/message.dart';
 import 'package:northguard/model/password.dart';
 import 'package:northguard/model/user.dart' show User;
 

@@ -39,7 +39,7 @@ class _ChooseLanguageFormState extends State<ChooseLanguageForm> {
               centerTitle: false,
               leading: PopScope(
                 canPop: false,
-                onPopInvoked: (bool? pop) {
+                onPopInvokedWithResult: (bool? pop, var result) {
                   _backButtonPressed();
                 },
                 child: IconButton(
@@ -101,11 +101,13 @@ class _ChooseLanguageFormState extends State<ChooseLanguageForm> {
                                                 child:
                                                     const CircularProgressIndicator(),
                                               )
-                                            : Radio<Language>(
-                                                value: language,
+                                            : RadioGroup(
                                                 groupValue:
                                                     state.currentLanguage,
                                                 onChanged: (_) {},
+                                                child: Radio<Language>(
+                                                  value: language,
+                                                ),
                                               ),
                                       ),
                                       const SizedBox(width: 8.0),
@@ -210,9 +212,9 @@ class _ChooseLanguageFormState extends State<ChooseLanguageForm> {
   }
 
   /// Triggers when user presses 'Confirm' button
-  void _confirmButtonPressed() {
-    _bloc.add(settings.ChangesConfirmed());
-  }
+  // void _confirmButtonPressed() {
+  //   _bloc.add(settings.ChangesConfirmed());
+  // }
 
   void _backButtonPressed() {
     _bloc.add(settings.BackButtonPressed());

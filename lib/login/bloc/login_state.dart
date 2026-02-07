@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:northguard/util/biometrics.dart';
-import 'package:northguard/web/web.dart';
 
 /// Various phases of login process
 enum LoginStatus {
@@ -151,7 +149,5 @@ int autoLogoutTimerToMinutes(AutoLogoutTimer value) {
       return 60;
     case AutoLogoutTimer.hour4:
       return 240;
-    default:
-      return 0;
   }
 }

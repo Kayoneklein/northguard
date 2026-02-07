@@ -42,217 +42,223 @@ class _UserInfoFormState extends State<UserInfoForm> {
   Widget build(BuildContext context) {
     return BlocListener<UserInfoBloc, UserInfoState>(
       listener: _stateChangeListener,
-      child:
-          BlocBuilder<UserInfoBloc, UserInfoState>(builder: (context, state) {
-        if (_nameController.text != state.name) {
-          _nameController.value =
-              _nameController.value.copyWith(text: state.name);
-        }
-        if (_departmentController.text != state.department) {
-          _departmentController.value =
-              _departmentController.value.copyWith(text: state.department);
-        }
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(Strings.userInfoTitle),
-            centerTitle: false,
-            leading: PopScope(
-              canPop: false,
-              onPopInvokedWithResult: (bool? pop, fn) {},
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => _backButtonPressed(context),
+      child: BlocBuilder<UserInfoBloc, UserInfoState>(
+        builder: (context, state) {
+          if (_nameController.text != state.name) {
+            _nameController.value = _nameController.value.copyWith(
+              text: state.name,
+            );
+          }
+          if (_departmentController.text != state.department) {
+            _departmentController.value = _departmentController.value.copyWith(
+              text: state.department,
+            );
+          }
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(Strings.userInfoTitle),
+              centerTitle: false,
+              leading: PopScope(
+                canPop: false,
+                onPopInvokedWithResult: (bool? pop, fn) {},
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () => _backButtonPressed(context),
+                ),
               ),
+              actions: state.isInitialized
+                  ? [
+                      IconButton(
+                        icon: const Icon(Icons.check),
+                        tooltip: Strings.actionConfirm,
+                        onPressed: () {
+                          if (!state.isLoading) {
+                            _confirmButtonPressed(context);
+                          }
+                        },
+                      ),
+                    ]
+                  : [],
             ),
-            actions: state.isInitialized
-                ? [
-                    IconButton(
-                      icon: const Icon(Icons.check),
-                      tooltip: Strings.actionConfirm,
-                      onPressed: () {
-                        if (!state.isLoading) {
-                          _confirmButtonPressed(context);
-                        }
-                      },
-                    ),
-                  ]
-                : [],
-          ),
-          body: Stack(
-            children: <Widget>[
-              if (state.isInitialized)
-                Scrollbar(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            Strings.userInfoName,
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                          TextFormField(
-                            controller: _nameController,
-                            style: Theme.of(context).textTheme.headlineSmall,
-                            textInputAction: TextInputAction.next,
-                            textCapitalization: TextCapitalization.words,
-                            onFieldSubmitted: (v) {
-                              FocusScope.of(context).nextFocus();
-                            },
-                          ),
-                          const SizedBox(height: 24.0),
-                          Text(
-                            Strings.userInfoDepartment,
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                          TextFormField(
-                            controller: _departmentController,
-                            style: Theme.of(context).textTheme.headlineSmall,
-                            textInputAction: TextInputAction.done,
-                            textCapitalization: TextCapitalization.words,
-                            onFieldSubmitted: (v) {
-                              FocusScope.of(context).unfocus();
-                            },
-                          ),
-                          const SizedBox(height: 24.0),
-                          Text(
-                            Strings.userInfoAvatar,
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                          const SizedBox(height: 16.0),
-                          Stack(
-                            children: <Widget>[
-                              CircleAvatar(
-                                radius: 75.0,
-                                backgroundColor: Colors.grey[300],
-                                backgroundImage: state.avatar.isNotEmpty
-                                    ? MemoryImage(state.avatar) as ImageProvider
-                                    : const AssetImage(
-                                        'assets/user_default.png'),
-                              ),
-                              Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  child: const SizedBox(
-                                      width: 150.0, height: 150.0),
-                                  borderRadius: BorderRadius.circular(75.0),
-                                  onTap: _onAvatarPressed,
+            body: Stack(
+              children: <Widget>[
+                if (state.isInitialized)
+                  Scrollbar(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              Strings.userInfoName,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                            TextFormField(
+                              controller: _nameController,
+                              style: Theme.of(context).textTheme.headlineSmall,
+                              textInputAction: TextInputAction.next,
+                              textCapitalization: TextCapitalization.words,
+                              onFieldSubmitted: (v) {
+                                FocusScope.of(context).nextFocus();
+                              },
+                            ),
+                            const SizedBox(height: 24.0),
+                            Text(
+                              Strings.userInfoDepartment,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                            TextFormField(
+                              controller: _departmentController,
+                              style: Theme.of(context).textTheme.headlineSmall,
+                              textInputAction: TextInputAction.done,
+                              textCapitalization: TextCapitalization.words,
+                              onFieldSubmitted: (v) {
+                                FocusScope.of(context).unfocus();
+                              },
+                            ),
+                            const SizedBox(height: 24.0),
+                            Text(
+                              Strings.userInfoAvatar,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                            const SizedBox(height: 16.0),
+                            Stack(
+                              children: <Widget>[
+                                CircleAvatar(
+                                  radius: 75.0,
+                                  backgroundColor: Colors.grey[300],
+                                  backgroundImage: state.avatar.isNotEmpty
+                                      ? MemoryImage(state.avatar)
+                                            as ImageProvider
+                                      : const AssetImage(
+                                          'assets/user_default.png',
+                                        ),
+                                ),
+                                Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    child: const SizedBox(
+                                      width: 150.0,
+                                      height: 150.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(75.0),
+                                    onTap: _onAvatarPressed,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16.0),
+                            OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                backgroundColor: PColors.darkBlue,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                  horizontal: 24,
+                                ),
+                                // fixedSize: const Size(201, 54),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                            ],
-                          ),
-                          const SizedBox(height: 16.0),
-                          OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              backgroundColor: PColors.darkBlue,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 12,
-                                horizontal: 24,
-                              ),
-                              fixedSize: const Size(201, 54),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                              onPressed: _onDeleteAvatarPressed,
+                              child: Text(
+                                Strings.userInfoDeleteAvatar,
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(
+                                      color: PColors.white,
+                                      fontWeight: FontWeight.w700,
+                                    ),
                               ),
                             ),
-                            onPressed: _onDeleteAvatarPressed,
-                            child: Text(
-                              Strings.userInfoDeleteAvatar,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: PColors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                            ),
-                          ),
-                          const SizedBox(height: 50.0),
-                          OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 12,
-                                horizontal: 24,
+                            const SizedBox(height: 30.0),
+                            OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                  horizontal: 15,
+                                ),
+
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  side: BorderSide(color: PColors.darkBlue),
+                                ),
                               ),
-                              fixedSize: const Size(201, 54),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
+                              onPressed: () {
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute<void>(
                                     builder: (context) => const DeleteAccount(),
-                                  ));
-                            },
-                            child: Text(
-                              Strings.deleteAccountRemoveAccount,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: PColors.darkBlue,
-                                    fontWeight: FontWeight.w700,
-                                    // decoration: TextDecoration.underline,
                                   ),
+                                );
+                              },
+                              child: Text(
+                                Strings.deleteAccountRemoveAccount,
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(
+                                      color: PColors.darkBlue,
+                                      fontWeight: FontWeight.w700,
+                                      // decoration: TextDecoration.underline,
+                                    ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              if (state.isLoading) const LinearProgressIndicator(),
-            ],
-          ),
-        );
-      }),
+                if (state.isLoading) const LinearProgressIndicator(),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
   /// Triggers when state changes
   Future<void> _stateChangeListener(
-      BuildContext context, UserInfoState state) async {
+    BuildContext context,
+    UserInfoState state,
+  ) async {
     if (state is ShowDiscardDialogState) {
-      final bool? isYes = await showDialog<bool?>(
-              context: context,
-              builder: (BuildContext dialogContext) {
-                return AlertDialog(
-                  content: Text(Strings.userInfoDiscardChanges),
-                  actions: <Widget>[
-                    TextButton(
-                      child: Text(Strings.actionNo.toUpperCase()),
-                      onPressed: () {
-                        Navigator.of(dialogContext).pop(false);
-                      },
-                    ),
-                    TextButton(
-                      child: Text(Strings.actionYes.toUpperCase()),
-                      onPressed: () {
-                        Navigator.of(dialogContext).pop(true);
-                      },
-                    ),
-                  ],
-                );
-              }) ??
+      final bool? isYes =
+          await showDialog<bool?>(
+            context: context,
+            builder: (BuildContext dialogContext) {
+              return AlertDialog(
+                content: Text(Strings.userInfoDiscardChanges),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text(Strings.actionNo.toUpperCase()),
+                    onPressed: () {
+                      Navigator.of(dialogContext).pop(false);
+                    },
+                  ),
+                  TextButton(
+                    child: Text(Strings.actionYes.toUpperCase()),
+                    onPressed: () {
+                      Navigator.of(dialogContext).pop(true);
+                    },
+                  ),
+                ],
+              );
+            },
+          ) ??
           false;
       _bloc.add(DialogConfirmationReceived(isYes: isYes ?? false));
     }
     if (state is UserInfoSavedState) {
       if (state.isSuccess) {
-        BlocProvider.of<AuthenticationBloc>(context)
-            .add(UserInfoChangedEvent());
+        BlocProvider.of<AuthenticationBloc>(
+          context,
+        ).add(UserInfoChangedEvent());
         Navigator.of(context).pop();
       } else {
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
-          ..showSnackBar(
-            SnackBar(
-              content: Text(Strings.userInfoSaveError),
-            ),
-          );
+          ..showSnackBar(SnackBar(content: Text(Strings.userInfoSaveError)));
       }
     }
     if (state is SessionExpiredState) {
@@ -355,9 +361,9 @@ class _UserInfoFormState extends State<UserInfoForm> {
               ),
               child: Text(
                 Strings.delete,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: PColors.white,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(color: PColors.white),
               ),
             ),
           ],

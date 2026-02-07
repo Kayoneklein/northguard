@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
-// raf
-// import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:northguard/constants/preferences.dart';
 import 'package:northguard/model/configuration.dart';
@@ -2013,9 +2011,6 @@ class ServerAdapter {
             distance =
                 LocationService.get.calculateDistance(lat1, lng1, lat2, lng2) /
                 2;
-            break;
-          default:
-            distance = 200;
             break;
         }
         return Location(

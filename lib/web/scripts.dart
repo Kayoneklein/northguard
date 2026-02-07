@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:northguard/model/encrypted.dart';
@@ -275,14 +274,6 @@ class JavaScripts {
     final _eval = await _evaluate(
       'handleTeamKeys($teamIdsData, $membersData, false, false, false, $myId, $privateKeyData, $aesData)',
     );
-    if (_eval == null) {
-      return {};
-    }
-    // print(
-    //     '==========================================================================');
-    // print('passwords.length');
-    // print(members.length);
-    // print(_eval);
 
     final Map<String, dynamic> result = _smartDecode(_eval);
 

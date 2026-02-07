@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart' as location_service;
-//import 'package:location_android/location_android.dart' as location_service_android;
 import 'package:northguard/model/location.dart' as pc;
 import 'package:northguard/util/settings.dart';
 import 'package:northguard/util/strings.dart';

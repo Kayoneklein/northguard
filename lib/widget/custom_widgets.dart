@@ -131,7 +131,7 @@ class RoundedOutlineButton extends TextButton {
 
 /// ScrollBehavior with disabled (overscroll) edge effect (Android-specific)
 class NoEdgeEffectScrollBehavior extends ScrollBehavior {
-  @override
+  // @override
   Widget buildViewportChrome(
     BuildContext context,
     Widget child,

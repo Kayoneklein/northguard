@@ -9,7 +9,7 @@ class SignUpScreen extends StatelessWidget {
         title: Text(Strings.signUpTitle),
         leading: PopScope(
           canPop: false,
-          onPopInvoked: (bool? pop) {
+          onPopInvokedWithResult: (bool? pop, var result) {
             BlocProvider.of<AuthenticationBloc>(
               context,
             ).add(LoginRequestedEvent());

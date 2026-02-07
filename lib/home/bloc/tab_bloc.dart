@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:northguard/home/bloc/tab.dart';
 
@@ -10,13 +9,4 @@ class TabBloc extends Bloc<TabEvent, AppTab> {
       }
     });
   }
-
-  /*@override
-  Stream<AppTab> mapEventToState(
-    TabEvent event,
-  ) async* {
-    if (event is UpdateTab) {
-      yield event.tab;
-    }
-  }*/
 }

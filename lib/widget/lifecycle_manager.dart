@@ -6,9 +6,9 @@ class LifeCycleManager extends StatefulWidget {
     Key? key,
     required Widget child,
     required ValueChanged<AppLifecycleState> onStateChanged,
-  })  : _child = child,
-        _onStateChanged = onStateChanged,
-        super(key: key);
+  }) : _child = child,
+       _onStateChanged = onStateChanged,
+       super(key: key);
 
   final Widget _child;
 
@@ -18,16 +18,17 @@ class LifeCycleManager extends StatefulWidget {
   _LifeCycleManagerState createState() => _LifeCycleManagerState();
 }
 
-class _LifeCycleManagerState extends State<LifeCycleManager> with WidgetsBindingObserver {
+class _LifeCycleManagerState extends State<LifeCycleManager>
+    with WidgetsBindingObserver {
   @override
   void initState() {
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance?.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -38,8 +39,6 @@ class _LifeCycleManagerState extends State<LifeCycleManager> with WidgetsBinding
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: widget._child,
-    );
+    return Container(child: widget._child);
   }
 }

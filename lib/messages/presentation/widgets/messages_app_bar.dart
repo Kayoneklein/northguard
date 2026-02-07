@@ -225,10 +225,10 @@ class _MessagesAppBarState extends State<MessagesAppBar> {
                   child: Row(
                     children: <Widget>[
                       IgnorePointer(
-                        child: Radio(
-                          value: o,
+                        child: RadioGroup(
                           groupValue: state.currentSortingOrder,
                           onChanged: (_) {},
+                          child: Radio(value: o),
                         ),
                       ),
                       const SizedBox(width: 8.0),

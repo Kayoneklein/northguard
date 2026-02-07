@@ -10,6 +10,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:northguard/authentication/bloc/authentication.dart';
 import 'package:northguard/config/configuration_bloc.dart';
+import 'package:northguard/constants/colors.dart';
 import 'package:northguard/constants/global_variables.dart';
 import 'package:northguard/delete_account/index.dart';
 import 'package:northguard/home/index.dart';
@@ -228,7 +229,8 @@ class _PCryptAppState extends State<PCryptApp> with WidgetsBindingObserver {
               } else if (state is StartupGuide) {
                 widget = GuideScreen();
                 overlayStyle = SystemUiOverlayStyle.dark.copyWith(
-                  systemNavigationBarColor: Colors.blue[900],
+                  // systemNavigationBarColor: Colors.blue[900],
+                  systemNavigationBarColor: PColors.blue,
                   systemNavigationBarIconBrightness: Brightness.light,
                   statusBarIconBrightness: Brightness.light,
                 );
@@ -325,12 +327,39 @@ class _PCryptAppState extends State<PCryptApp> with WidgetsBindingObserver {
     }
   }
 
+  /// Creates a [MaterialColor] based on the supplied [Color]
+  MaterialColor createMaterialColor(Color color) {
+    final strengths = <double>[.05];
+    final swatch = <int, Color>{};
+
+    final argb = color.toARGB32();
+
+    final int r = (argb >> 16) & 0xFF;
+    final int g = (argb >> 8) & 0xFF;
+    final int b = argb & 0xFF;
+
+    for (var i = 1; i < 10; i++) {
+      strengths.add(0.1 * i);
+    }
+    for (var strength in strengths) {
+      final ds = 0.5 - strength;
+      swatch[(strength * 1000).round()] = Color.fromRGBO(
+        r + ((ds < 0 ? r : (255 - r)) * ds).round(),
+        g + ((ds < 0 ? g : (255 - g)) * ds).round(),
+        b + ((ds < 0 ? b : (255 - b)) * ds).round(),
+        1,
+      );
+    }
+    return MaterialColor(argb, swatch);
+  }
+
   ThemeData _buildThemeData() {
     final textTheme = Theme.of(context).textTheme;
 
     return ThemeData(
-      primarySwatch: Colors.blue,
-      primaryColor: Colors.blue,
+      primarySwatch: createMaterialColor(PColors.blue),
+      // primarySwatch: Colors.blue,
+      primaryColor: PColors.blue,
       textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(
         bodySmall: const TextStyle(fontSize: 13.0),
         bodyMedium: const TextStyle(fontSize: 16.0),
@@ -347,18 +376,18 @@ class _PCryptAppState extends State<PCryptApp> with WidgetsBindingObserver {
         bodyLarge: TextStyle(fontSize: 16.0),
       ),
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.blue,
+        backgroundColor: PColors.blue,
         //brightness: Brightness.dark,
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        selectedItemColor: Colors.blue,
+        selectedItemColor: PColors.blue,
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: Colors.blue,
+        backgroundColor: PColors.blue,
       ),
       useMaterial3: false,
-      tabBarTheme: const TabBarThemeData(indicatorColor: Colors.blue),
-      primaryColorLight: Colors.blue,
+      tabBarTheme: const TabBarThemeData(indicatorColor: PColors.blue),
+      primaryColorLight: PColors.blue,
       chipTheme: const ChipThemeData(
         brightness: Brightness.light,
         padding: EdgeInsets.only(
@@ -371,17 +400,17 @@ class _PCryptAppState extends State<PCryptApp> with WidgetsBindingObserver {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
           side: BorderSide(
-            color: Colors.blue,
+            color: PColors.blue,
             width: 2.0,
             style: BorderStyle.solid,
           ),
         ),
         backgroundColor: Colors.transparent,
-        labelStyle: TextStyle(fontSize: 14.0, color: Colors.blue),
-        selectedColor: Colors.blue,
+        labelStyle: TextStyle(fontSize: 14.0, color: PColors.blue),
+        selectedColor: PColors.blue,
         secondaryLabelStyle: TextStyle(fontSize: 14.0, color: Colors.black),
         disabledColor: Colors.grey,
-        secondarySelectedColor: Colors.blue,
+        secondarySelectedColor: PColors.blue,
       ),
     );
   }

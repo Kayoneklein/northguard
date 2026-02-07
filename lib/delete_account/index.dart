@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:northguard/authentication/bloc/authentication.dart';
+import 'package:northguard/constants/colors.dart';
 import 'package:northguard/constants/preferences.dart';
 import 'package:northguard/util/snackbar.dart';
 import 'package:northguard/util/strings.dart';

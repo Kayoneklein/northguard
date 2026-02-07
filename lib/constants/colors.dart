@@ -5,6 +5,9 @@ class PColors {
   static const Color white = Color(0xFFFFFFFF);
 
   // static final darkBlue = Colors.blue[900];
-  static const darkBlue = Color(0xFF2C85D5);
+  // static const darkBlue = Color(0xFF2C85D5);
+  static const blue = Color(0xFF4accff);
+  static const deepBlue = Color(0xFF4576ff);
+  static const darkBlue = Color(0xFF204bd1);
   static const grey = Color(0xFF757575);
 }
