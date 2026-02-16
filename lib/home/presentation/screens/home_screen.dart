@@ -11,8 +11,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool readOnlyMode = false;
 
-  Future<void> _initReadOnly() async {
+  Future<bool> _initReadOnly() async {
     readOnlyMode = await Preferences().readonlyMode ?? false;
+    return readOnlyMode;
   }
 
   @override
@@ -118,8 +119,6 @@ class _HomeScreenState extends State<HomeScreen> {
         return MessagesAppBar();
       case AppTab.notifications:
         return AppBar(title: Text(Strings.notificationsTitle));
-      default:
-        return AppBar();
     }
   }
 
@@ -129,11 +128,17 @@ class _HomeScreenState extends State<HomeScreen> {
         return BlocBuilder<PasswordsBloc, PasswordsState>(
           builder: (context, state) {
             if (state.isPasswordsAvailable) {
-              return FloatingActionButton(
-                child: const Icon(Icons.add),
-                backgroundColor: readOnlyMode ? Colors.grey : null,
-                onPressed: () =>
-                    _addNewPassword(context, state.totalFilesUploaded),
+              return FutureBuilder(
+                future: _initReadOnly(),
+                builder: (_, snapshot) {
+                  final _readOnly = snapshot.data;
+                  return FloatingActionButton(
+                    child: const Icon(Icons.add),
+                    backgroundColor: _readOnly == true ? Colors.grey : null,
+                    onPressed: () =>
+                        _addNewPassword(context, state.totalFilesUploaded),
+                  );
+                },
               );
             } else {
               return const SizedBox();
@@ -175,8 +180,6 @@ class _HomeScreenState extends State<HomeScreen> {
         return MessagesScreen();
       case AppTab.notifications:
         return NotificationsScreen();
-      default:
-        return Container();
     }
   }
 

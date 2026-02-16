@@ -81,6 +81,9 @@ flutter:
           weight: 700
         - asset: fonts/Roboto-Italic.ttf
           style: italic
+    - family: CustomIcons
+      fonts:
+        - asset: fonts/CustomIcons.ttf
 
   assets:
     - assets/
