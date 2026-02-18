@@ -289,6 +289,8 @@ class AuthenticationBloc
     );
   }
 
+  void _readOnlyCheck() {}
+
   void _startTimer() {
     final callback = (Timer? t) {
       _checkUserUpdates();

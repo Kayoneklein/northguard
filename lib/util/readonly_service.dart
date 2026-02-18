@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:northguard/model/configuration.dart';
 import 'package:northguard/model/encrypted.dart';
 import 'package:northguard/model/group.dart';

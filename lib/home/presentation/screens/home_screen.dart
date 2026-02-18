@@ -9,17 +9,23 @@ class _HomeScreenState extends State<HomeScreen> {
   DateTime _lastBackPressedTime = DateTime.now();
   bool canPop = false;
 
-  bool readOnlyMode = false;
-
-  Future<bool> _initReadOnly() async {
-    readOnlyMode = await Preferences().readonlyMode ?? false;
-    return readOnlyMode;
-  }
+  final StreamController<bool> _controller = StreamController<bool>();
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    _initReadOnly();
+    _timer = Timer.periodic(Duration(seconds: 2), (_) async {
+      final _readOnly = await Preferences().readonlyMode ?? false;
+      _controller.add(_readOnly);
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _controller.close();
+    super.dispose();
   }
 
   @override
@@ -128,8 +134,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return BlocBuilder<PasswordsBloc, PasswordsState>(
           builder: (context, state) {
             if (state.isPasswordsAvailable) {
-              return FutureBuilder(
-                future: _initReadOnly(),
+              return StreamBuilder<bool>(
+                stream: _controller.stream,
                 builder: (_, snapshot) {
                   final _readOnly = snapshot.data;
                   return FloatingActionButton(

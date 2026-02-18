@@ -33,6 +33,7 @@ import 'package:northguard/passwords/presentation/widgets/tags_drawer.dart';
 import 'package:northguard/sharing/index.dart';
 import 'package:northguard/util/formatters.dart';
 import 'package:northguard/util/location_service.dart';
+import 'package:northguard/util/readonly_service.dart';
 import 'package:northguard/util/settings.dart';
 import 'package:northguard/util/strings.dart';
 import 'package:northguard/web/server_adapter.dart';

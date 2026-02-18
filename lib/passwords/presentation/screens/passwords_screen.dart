@@ -1,7 +1,12 @@
 part of '../../index.dart';
 
 ///Screen for displaying list of passwords
-class PasswordsScreen extends StatelessWidget {
+class PasswordsScreen extends StatefulWidget {
+  @override
+  State<PasswordsScreen> createState() => _PasswordsScreenState();
+}
+
+class _PasswordsScreenState extends State<PasswordsScreen> {
   final Settings _settings = Settings.get;
 
   /// Fires after making changes to passwords list
@@ -182,7 +187,25 @@ class PasswordsScreen extends StatelessWidget {
     Scaffold.of(context).openEndDrawer();
   }
 
-  //--------------------------------------------------------------------------------------------------------------------
+  final StreamController<bool> _controller = StreamController<bool>();
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(Duration(seconds: 2), (_) async {
+      final readOnly = await Preferences().readonlyMode ?? false;
+      _controller.add(readOnly);
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _controller.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<pass.PasswordsBloc, pass.PasswordsState>(
@@ -341,43 +364,47 @@ class PasswordsScreen extends StatelessWidget {
       child: BlocBuilder<pass.PasswordsBloc, pass.PasswordsState>(
         builder: (context, state) {
           return Scaffold(
-            body: Stack(
-              children: [
-                Column(
+            body: StreamBuilder(
+              stream: _controller.stream,
+              initialData: false,
+              builder: (context, snapshot) {
+                return Stack(
                   children: [
-                    if (state.isReadOnlyMode == true)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: Container(
-                          width: double.infinity,
-                          height: 35,
-                          decoration: BoxDecoration(
-                            color: PColors.grey.withValues(alpha: 0.9),
-                          ),
-                          child: Center(
-                            child: Text(
-                              Strings.readOnlyMode,
-                              style: Theme.of(context).textTheme.bodyMedium
-                                  ?.copyWith(
-                                    color: PColors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                    Column(
+                      children: [
+                        if (snapshot.data == true)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: 35,
+                              decoration: BoxDecoration(color: Colors.grey),
+                              child: Center(
+                                child: Text(
+                                  Strings.readOnlyMode,
+                                  style: Theme.of(context).textTheme.bodyMedium
+                                      ?.copyWith(
+                                        color: PColors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    if (context
-                        .watch<pass.PasswordsBloc>()
-                        .isLoadingPasswordFromAutofill)
-                      _buildPickPasswordToUpdateTip()
-                    else
-                      const SizedBox(),
-                    Expanded(child: _buildList(context, state)),
+                        if (context
+                            .watch<pass.PasswordsBloc>()
+                            .isLoadingPasswordFromAutofill)
+                          _buildPickPasswordToUpdateTip()
+                        else
+                          const SizedBox(),
+                        Expanded(child: _buildList(context, state)),
+                      ],
+                    ),
+                    if (state.isLoading) const LinearProgressIndicator(),
                   ],
-                ),
-                if (state.isLoading) const LinearProgressIndicator(),
-              ],
+                );
+              },
             ),
           );
         },
